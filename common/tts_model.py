@@ -1,14 +1,12 @@
 import numpy as np
-import gradio as gr
 import torch
 import os
 import warnings
-from gradio.processing_utils import convert_to_16_bit_wav
 from typing import Dict, List, Optional
 
-import utils
-from infer import get_net_g, infer
-from models import SynthesizerTrn
+from .. import utils
+from ..infer import get_net_g, infer
+from ..models import SynthesizerTrn
 
 from .log import logger
 from .constants import (
@@ -85,7 +83,7 @@ class Model:
         use_assist_text: bool = False,
         style: str = DEFAULT_STYLE,
         style_weight: float = DEFAULT_STYLE_WEIGHT,
-    ) -> tuple[int, np.ndarray]:
+    ):# -> tuple[int, np.ndarray]:
         logger.info(f"Start generating audio data from text:\n{text}")
         if reference_audio_path == "":
             reference_audio_path = None
@@ -146,7 +144,7 @@ class Model:
                 audio = np.concatenate(audios)
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
-                audio = convert_to_16_bit_wav(audio)
+                #audio = convert_to_16_bit_wav(audio)
         logger.info("Audio data generated successfully")
         return (self.hps.data.sampling_rate, audio)
 
@@ -187,7 +185,7 @@ class ModelHolder:
 
     def load_model_gr(
         self, model_name: str, model_path: str
-    ) -> tuple[gr.Dropdown, gr.Button]:
+    ):# -> tuple[gr.Dropdown, gr.Button]:
         if model_name not in self.model_files_dict:
             raise Exception(f"モデル名{model_name}は存在しません")
         if model_path not in self.model_files_dict[model_name]:
@@ -204,16 +202,16 @@ class ModelHolder:
             gr.Button(interactive=True, value="音声合成"),
         )
 
-    def update_model_files_gr(self, model_name: str) -> gr.Dropdown:
+    def update_model_files_gr(self, model_name: str):# -> gr.Dropdown:
         model_files = self.model_files_dict[model_name]
-        return gr.Dropdown(choices=model_files, value=model_files[0])
+        #return gr.Dropdown(choices=model_files, value=model_files[0])
 
-    def update_model_names_gr(self) -> tuple[gr.Dropdown, gr.Dropdown, gr.Button]:
+    def update_model_names_gr(self):# -> tuple[gr.Dropdown, gr.Dropdown, gr.Button]:
         self.refresh()
         initial_model_name = self.model_names[0]
         initial_model_files = self.model_files_dict[initial_model_name]
-        return (
-            gr.Dropdown(choices=self.model_names, value=initial_model_name),
-            gr.Dropdown(choices=initial_model_files, value=initial_model_files[0]),
-            gr.Button(interactive=False),  # For tts_button
-        )
+        # return (
+        #     gr.Dropdown(choices=self.model_names, value=initial_model_name),
+        #     gr.Dropdown(choices=initial_model_files, value=initial_model_files[0]),
+        #     gr.Button(interactive=False),  # For tts_button
+        # )

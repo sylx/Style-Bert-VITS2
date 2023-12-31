@@ -5,7 +5,7 @@ import unicodedata
 
 from transformers import AutoTokenizer
 
-from text import punctuation, symbols
+from . import punctuation, symbols
 
 from num2words import num2words
 
@@ -342,7 +342,10 @@ def handle_long(sep_phonemes):
     return sep_phonemes
 
 
-tokenizer = AutoTokenizer.from_pretrained("./bert/deberta-v2-large-japanese-char-wwm")
+#fileからの相対パスで指定
+from os.path import dirname
+package_root=dirname(dirname(__file__))
+tokenizer = AutoTokenizer.from_pretrained(f"{package_root}/bert/deberta-v2-large-japanese-char-wwm")
 
 
 def align_tones(phones, tones):

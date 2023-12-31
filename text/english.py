@@ -4,14 +4,19 @@ import re
 from g2p_en import G2p
 from transformers import DebertaV2Tokenizer
 
-from text import symbols
-from text.symbols import punctuation
+from . import symbols
+from .symbols import punctuation
 
 current_file_path = os.path.dirname(__file__)
 CMU_DICT_PATH = os.path.join(current_file_path, "cmudict.rep")
 CACHE_PATH = os.path.join(current_file_path, "cmudict_cache.pickle")
 _g2p = G2p()
-LOCAL_PATH = "./bert/deberta-v3-large"
+
+#fileからの相対パスで指定
+from os.path import dirname
+package_root=dirname(dirname(__file__))
+
+LOCAL_PATH = f"{package_root}/bert/deberta-v3-large"
 tokenizer = DebertaV2Tokenizer.from_pretrained(LOCAL_PATH)
 
 arpa = {

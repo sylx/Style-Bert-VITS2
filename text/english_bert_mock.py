@@ -3,10 +3,10 @@ import sys
 import torch
 from transformers import DebertaV2Model, DebertaV2Tokenizer
 
-from config import config
+from ..config import config
 
-
-LOCAL_PATH = "./bert/deberta-v3-large"
+from os.path import dirname
+LOCAL_PATH = f"{dirname(dirname(__file__))}/bert/deberta-v3-large"
 
 tokenizer = DebertaV2Tokenizer.from_pretrained(LOCAL_PATH)
 

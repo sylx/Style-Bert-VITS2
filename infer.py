@@ -1,11 +1,11 @@
 import torch
 
-import commons
-import utils
-from models import SynthesizerTrn
-from text import cleaned_text_to_sequence, get_bert
-from text.cleaner import clean_text
-from text.symbols import symbols
+from . import commons
+from . import utils
+from .models import SynthesizerTrn
+from .text import cleaned_text_to_sequence, get_bert
+from .text.cleaner import clean_text
+from .text.symbols import symbols
 
 # latest_version = "1.0"
 

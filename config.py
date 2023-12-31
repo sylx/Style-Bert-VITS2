@@ -8,7 +8,7 @@ from typing import Dict, List
 
 import yaml
 
-from common.log import logger
+from .common.log import logger
 
 
 class Resample_config:
@@ -255,15 +255,17 @@ class Config:
             #     yaml_config["translate"]
             # )
 
+from os.path import dirname
 
 parser = argparse.ArgumentParser()
 # 为避免与以前的config.json起冲突，将其更名如下
-parser.add_argument("-y", "--yml_config", type=str, default="config.yml")
+parser.add_argument("-y", "--yml_config", type=str, default=f"{dirname(__file__)}/config.yml")
 args, _ = parser.parse_known_args()
+
 
 try:
     config = Config(args.yml_config)
 except TypeError:
     logger.warning("Old config.yml found. Replace it with default_config.yml.")
-    shutil.copy(src="default_config.yml", dst="config.yml")
-    config = Config("config.yml")
+    shutil.copy(src=f"{dirname(__file__)}/default_config.yml", dst=f"{dirname(__file__)}/config.yml")
+    config = Config(f"{dirname(__file__)}/config.yml")
